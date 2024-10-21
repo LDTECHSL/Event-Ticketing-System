@@ -16,12 +16,9 @@ public class Vendor implements Runnable {
         this.releaseInterval = releaseInterval;
     }
 
-
     @Override
     public void run() {
-        while (true) {
-            List<String> newTickets = generateTickets();
-            ticketPool.addTickets(newTickets);
+            ticketPool.addTickets(vendorId, ticketsPerRelease);
             try {
                 // Simulate the release interval
                 Thread.sleep(releaseInterval);
@@ -29,15 +26,5 @@ public class Vendor implements Runnable {
                 Thread.currentThread().interrupt();
                 System.out.println("Vendor " + vendorId + " was interrupted.");
             }
-        }
-    }
-
-    private List<String> generateTickets() {
-        List<String> tickets = new ArrayList<>();
-        for (int i = 1; i <= ticketsPerRelease; i++) {
-            tickets.add(vendorId + "-Ticket-" + i);
-        }
-        System.out.println("Vendor " + vendorId + " generated " + ticketsPerRelease + " tickets.");
-        return tickets;
     }
 }

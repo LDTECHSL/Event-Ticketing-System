@@ -1,15 +1,18 @@
 package com.ticket.system.ticketsystembackend.entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer implements Runnable {
     private final TicketPool ticketPool;
-    private final String customerId;
+    private final int vendorId;
+    private final int customerId;
     private final long retrievalInterval;
     private final int ticketsToPurchase;
 
-    public Customer(TicketPool ticketPool, String customerId, long retrievalInterval, int ticketsToPurchase) {
+    public Customer(TicketPool ticketPool, int vendorId, int customerId, long retrievalInterval, int ticketsToPurchase) {
         this.ticketPool = ticketPool;
+        this.vendorId = vendorId;
         this.customerId = customerId;
         this.retrievalInterval = retrievalInterval;
         this.ticketsToPurchase = ticketsToPurchase;
@@ -17,16 +20,13 @@ public class Customer implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        int purchaseCount = 0; // Track the number of successful purchases
+
             List<String> purchasedTickets = new ArrayList<>();
-            for (int i = 0; i < ticketsToPurchase; i++) {
-                String purchasedTicket = ticketPool.removeTicket();
-                if (purchasedTicket != null) {
+                String purchasedTicket = ticketPool.removeTicket(vendorId,ticketsToPurchase);
                     purchasedTickets.add(purchasedTicket);
-                } else {
-                    break; // Stop trying to purchase if a ticket is not available
-                }
-            }
+                    purchaseCount++; // Increment the successful purchase count
+
 
             if (!purchasedTickets.isEmpty()) {
                 System.out.println("Customer " + customerId + " purchased tickets: " + purchasedTickets);
@@ -40,8 +40,6 @@ public class Customer implements Runnable {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Customer " + customerId + " was interrupted.");
-                break;
             }
-        }
     }
 }
