@@ -15,16 +15,18 @@ public class User {
     private String name;
     private String password;
     private String type;
+    private String priority;
     private int status;
 
     public User() {
     }
 
-    public User(int id, String name, String password, String type, int status) {
+    public User(int id, String name, String password, String type, String priority, int status) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.type = type;
+        this.priority = priority;
         this.status = status;
     }
 
@@ -58,6 +60,14 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public int getStatus() {

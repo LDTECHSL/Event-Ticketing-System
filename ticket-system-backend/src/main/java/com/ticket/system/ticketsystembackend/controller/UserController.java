@@ -29,8 +29,19 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    @PutMapping("/update-user")
+    public User updateUserById(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
+
     @DeleteMapping("/delete-user/{id}")
     public String deleteUserById(@PathVariable int id) {
         return userService.deleteUserById(id);
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody User user) {
+        String name = userService.loginUser(user.getName(), user.getPassword());
+        return name;
     }
 }

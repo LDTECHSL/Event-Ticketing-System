@@ -1,8 +1,6 @@
 package com.ticket.system.ticketsystembackend.controller;
 
-import com.ticket.system.ticketsystembackend.entity.Vendor;
-import com.ticket.system.ticketsystembackend.service.VendorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ticket.system.ticketsystembackend.entity.TicketPool;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,26 +9,16 @@ import java.util.List;
 @RequestMapping("/api/vendor")
 public class VendorController {
 
-    @Autowired
-    private VendorService vendorService;
+    private final TicketPool ticketPool;
 
-    @PostMapping("/add-vendor")
-    public Vendor addVendor(@RequestBody Vendor vendor) {
-        return vendorService.addVendor(vendor);
+    public VendorController(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
     }
 
-    @GetMapping("/get-vendors")
-    public List<Vendor> getAllVendors() {
-        return vendorService.getAllVendors();
-    }
-
-    @GetMapping("/get-vendor-by-id/{id}")
-    public Vendor findVendorById(@PathVariable int id) {
-        return vendorService.findVendorById(id);
-    }
-
-    @DeleteMapping("/delete-vendor/{id}")
-    public String deleteVendorById(@PathVariable int id) {
-        return vendorService.deleteVendorById(id);
+    // POST endpoint to add tickets
+    @PostMapping("/add-tickets")
+    public String addTickets(@RequestBody List<String> newTickets) {
+        ticketPool.addTickets(newTickets);
+        return newTickets.size() + " tickets added successfully!";
     }
 }

@@ -36,6 +36,16 @@ public class UserService {
         }
     }
 
+    public User updateUser(User user) {
+        User existingUser = userRepository.findById(user.getId()).get();
+        existingUser.setName(user.getName());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setType(user.getType());
+        existingUser.setPriority(user.getPriority());
+        existingUser.setStatus(user.getStatus());
+        return userRepository.save(existingUser);
+    }
+
     public String deleteUserById(int id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
@@ -45,7 +55,12 @@ public class UserService {
         }
     }
 
-    public int loginUser(String username, String password) {
-        return 1;
+    public String loginUser(String name, String password) {
+        Optional<User> user = userRepository.findByNameAndPassword(name, password);
+        if (user.isPresent()) {
+            return user.get().getType();
+        } else {
+            throw new RuntimeException("Invalid username or password");
+        }
     }
 }
