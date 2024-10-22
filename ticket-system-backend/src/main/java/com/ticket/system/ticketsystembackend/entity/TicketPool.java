@@ -1,35 +1,42 @@
 package com.ticket.system.ticketsystembackend.entity;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Vector;
 
 public class TicketPool {
-    private final Map<String, Integer> tickets;
+    private Vector<Ticket> tickets = new Vector<>();
 
-    public TicketPool() {
-        // Using a synchronized map to ensure thread-safe access
-        tickets = Collections.synchronizedMap(new HashMap<>());
+    public synchronized void addTickets(int vendorId, int ticketsPerRelease) {
+        boolean found = false;
+        for (Ticket ticket : tickets) {
+            if (ticket.getVendorId() == vendorId) {
+                ticket.setTicketsPerRelease(ticket.getTicketsPerRelease() + ticketsPerRelease);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            tickets.add(new Ticket(vendorId, ticketsPerRelease));
+        }
     }
 
-    // Add tickets by the vendor (synchronized for thread safety)
-    public synchronized void addTickets(String vendorId, int ticketsToAdd) {
-        tickets.put(vendorId, tickets.getOrDefault(vendorId, 0) + ticketsToAdd);
-        System.out.println(ticketsToAdd + " tickets added for vendor " + vendorId + ". Total tickets: " + tickets.get(vendorId));
-        notifyAll(); // Notify waiting customers that tickets are available
+    public synchronized void removeTickets(int vendorId, int ticketsToPurchase) {
+        for (Ticket ticket : tickets) {
+            if (ticket.getVendorId() == vendorId) {
+                int currentCount = ticket.getTicketsPerRelease();
+                if (currentCount >= ticketsToPurchase) {
+                    ticket.setTicketsPerRelease(currentCount - ticketsToPurchase);
+                }
+                break;
+            }
+        }
     }
 
-    // Remove a ticket by the customer (synchronized for thread safety)
-    public synchronized String removeTicket(int vendorId,int ticketsToRemove) {
-        tickets.put(String.valueOf(vendorId), tickets.getOrDefault(vendorId, 0) + ticketsToRemove);
-        System.out.println("Ticket purchased from vendor " + vendorId + ". Tickets left: " + ticketsToRemove);
-
-        // Notify that a ticket has been removed
-        return String.valueOf(vendorId); // Return the vendorId or any other identifier
-    }
-
-    // Optional: To check the number of tickets available for a specific vendor
-    public synchronized int getTicketCount(String vendorId) {
-        return tickets.getOrDefault(vendorId, 0);
+    public synchronized int getTicketCountByVendorId(int vendorId) {
+        for (Ticket ticket : tickets) {
+            if (ticket.getVendorId() == vendorId) {
+                return ticket.getTicketsPerRelease();
+            }
+        }
+        return 0;
     }
 }

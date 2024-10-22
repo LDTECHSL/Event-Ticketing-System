@@ -1,30 +1,28 @@
 package com.ticket.system.ticketsystembackend.entity;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class Vendor implements Runnable {
-    private final TicketPool ticketPool;
-    private final String vendorId;
-    private final int ticketsPerRelease;
-    private final long releaseInterval;
+    private int vendorId;
+    private int ticketsPerRelease;
+    private int releaseInterval;
+    private TicketPool ticketPool;
 
-    public Vendor(TicketPool ticketPool, String vendorId, int ticketsPerRelease, long releaseInterval) {
-        this.ticketPool = ticketPool;
+    public Vendor(int vendorId, int ticketsPerRelease, int releaseInterval, TicketPool ticketPool) {
         this.vendorId = vendorId;
         this.ticketsPerRelease = ticketsPerRelease;
         this.releaseInterval = releaseInterval;
+        this.ticketPool = ticketPool;
     }
 
     @Override
     public void run() {
-            ticketPool.addTickets(vendorId, ticketsPerRelease);
-            try {
-                // Simulate the release interval
+        try {
+            while (true) {
                 Thread.sleep(releaseInterval);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Vendor " + vendorId + " was interrupted.");
+                ticketPool.addTickets(vendorId, ticketsPerRelease);
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }
+
