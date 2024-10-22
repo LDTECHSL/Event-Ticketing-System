@@ -12,8 +12,8 @@ public class CustomerService {
         this.ticketPool = ticketPool;
     }
 
-    public void removeTickets(int vendorId, int ticketsToPurchase) {
-        ticketPool.removeTickets(vendorId, ticketsToPurchase);
+    public void removeTickets(int vendorId, int ticketsToPurchase, int retrievalInterval) {
+        ticketPool.removeTickets(vendorId, ticketsToPurchase, retrievalInterval);
     }
 }
 

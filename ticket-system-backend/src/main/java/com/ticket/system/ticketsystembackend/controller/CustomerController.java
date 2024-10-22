@@ -12,7 +12,7 @@ public class CustomerController {
     }
 
     @PostMapping("/removeTickets")
-    public void removeTickets(@RequestParam int vendorId, @RequestParam int ticketsToPurchase) {
-        customerService.removeTickets(vendorId, ticketsToPurchase);
+    public void removeTickets(@RequestParam int vendorId, @RequestParam int ticketsToPurchase, @RequestParam int retrievalInterval) {
+        customerService.removeTickets(vendorId, ticketsToPurchase, retrievalInterval);
     }
 }

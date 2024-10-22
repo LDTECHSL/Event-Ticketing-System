@@ -11,8 +11,8 @@ public class VendorService {
         this.ticketPool = ticketPool;
     }
 
-    public void addTickets(int vendorId, int ticketsPerRelease) {
-        ticketPool.addTickets(vendorId, ticketsPerRelease);
+    public void addTickets(int vendorId, int ticketsPerRelease, int releaseInterval) {
+        ticketPool.addTickets(vendorId, ticketsPerRelease, releaseInterval);
     }
 
     public int getTicketCountByVendorId(int vendorId) {

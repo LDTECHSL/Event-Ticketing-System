@@ -3,9 +3,9 @@ package com.ticket.system.ticketsystembackend.entity;
 import java.util.Vector;
 
 public class TicketPool {
-    private Vector<Ticket> tickets = new Vector<>();
+    private final Vector<Ticket> tickets = new Vector<>();
 
-    public synchronized void addTickets(int vendorId, int ticketsPerRelease) {
+    public synchronized void addTickets(int vendorId, int ticketsPerRelease, int releaseInterval) {
         boolean found = false;
         for (Ticket ticket : tickets) {
             if (ticket.getVendorId() == vendorId) {
@@ -19,7 +19,7 @@ public class TicketPool {
         }
     }
 
-    public synchronized void removeTickets(int vendorId, int ticketsToPurchase) {
+    public synchronized void removeTickets(int vendorId, int ticketsToPurchase, int retrievalInterval) {
         for (Ticket ticket : tickets) {
             if (ticket.getVendorId() == vendorId) {
                 int currentCount = ticket.getTicketsPerRelease();

@@ -11,9 +11,9 @@ public class VendorController {
         this.vendorService = vendorService;
     }
 
-    @PostMapping("/addTickets")
-    public void addTickets(@RequestParam int vendorId, @RequestParam int ticketsPerRelease) {
-        vendorService.addTickets(vendorId, ticketsPerRelease);
+    @PostMapping("/add-tickets")
+    public void addTickets(@RequestParam int vendorId, @RequestParam int ticketsPerRelease, @RequestParam int releaseInterval) {
+        vendorService.addTickets(vendorId, ticketsPerRelease, releaseInterval);
     }
 
     @GetMapping("/getTicketCount/{vendorId}")

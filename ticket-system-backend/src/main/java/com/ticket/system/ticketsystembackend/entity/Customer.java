@@ -20,7 +20,7 @@ public class Customer implements Runnable {
         try {
             while (true) {
                 Thread.sleep(retrievalInterval);
-                ticketPool.removeTickets(vendorId, ticketsToPurchase);
+                ticketPool.removeTickets(vendorId, ticketsToPurchase, retrievalInterval);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
