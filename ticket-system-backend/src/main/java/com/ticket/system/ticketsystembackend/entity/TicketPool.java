@@ -5,17 +5,16 @@ import java.util.Vector;
 public class TicketPool {
     private final Vector<Ticket> tickets = new Vector<>();
 
-    public synchronized void addTickets(int vendorId, int ticketsPerRelease, int releaseInterval) {
+    public synchronized void addTickets(Ticket t) {
         boolean found = false;
         for (Ticket ticket : tickets) {
-            if (ticket.getVendorId() == vendorId) {
-                ticket.setTicketsPerRelease(ticket.getTicketsPerRelease() + ticketsPerRelease);
+            if (ticket.getVendorId() == t.getVendorId()) {
                 found = true;
                 break;
             }
         }
         if (!found) {
-            tickets.add(new Ticket(vendorId, ticketsPerRelease));
+            tickets.add(new Ticket(t.getVendorId(), t.getTicketsPerRelease(), t.getEventName(), t.getVenue(), t.getDate(), t.getTime(), t.getPrice()));
         }
     }
 
@@ -26,17 +25,16 @@ public class TicketPool {
                 if (currentCount >= ticketsToPurchase) {
                     ticket.setTicketsPerRelease(currentCount - ticketsToPurchase);
                 }
-                break;
             }
         }
     }
 
-    public synchronized int getTicketCountByVendorId(int vendorId) {
+    public synchronized Ticket getTicketCountByVendorId(int vendorId) {
         for (Ticket ticket : tickets) {
             if (ticket.getVendorId() == vendorId) {
-                return ticket.getTicketsPerRelease();
+                return ticket;
             }
         }
-        return 0;
+        return null;
     }
 }

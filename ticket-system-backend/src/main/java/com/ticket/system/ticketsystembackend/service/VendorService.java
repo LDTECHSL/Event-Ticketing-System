@@ -1,6 +1,8 @@
 package com.ticket.system.ticketsystembackend.service;
 
+import com.ticket.system.ticketsystembackend.entity.Ticket;
 import com.ticket.system.ticketsystembackend.entity.TicketPool;
+import com.ticket.system.ticketsystembackend.entity.Vendor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,11 +13,13 @@ public class VendorService {
         this.ticketPool = ticketPool;
     }
 
-    public void addTickets(int vendorId, int ticketsPerRelease, int releaseInterval) {
-        ticketPool.addTickets(vendorId, ticketsPerRelease, releaseInterval);
+    public void addTickets(Ticket ticket,int releaseInterval) {
+        Vendor vendor = new Vendor(ticket,releaseInterval);
+        Thread thread = new Thread(vendor);
+        thread.start();
     }
 
-    public int getTicketCountByVendorId(int vendorId) {
+    public Ticket getTicketCountByVendorId(int vendorId) {
         return ticketPool.getTicketCountByVendorId(vendorId);
     }
 }

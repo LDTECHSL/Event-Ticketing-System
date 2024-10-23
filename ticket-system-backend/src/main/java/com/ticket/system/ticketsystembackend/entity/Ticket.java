@@ -20,8 +20,13 @@ public class Ticket {
     private String time;
     private double price;
 
-    public Ticket(int vendorId, int ticketsPerRelease) {
+    public Ticket(int vendorId, int ticketsPerRelease,String eventName, String venue, String date, String time, double price) {
         this.vendorId = vendorId;
+        this.eventName = eventName;
+        this.venue = venue;
+        this.date = date;
+        this.time = time;
+        this.price = price;
         this.ticketsPerRelease = ticketsPerRelease;
     }
 

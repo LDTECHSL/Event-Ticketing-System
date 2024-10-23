@@ -1,7 +1,6 @@
 package com.ticket.system.ticketsystembackend.service;
 
 import com.ticket.system.ticketsystembackend.entity.Ticket;
-import com.ticket.system.ticketsystembackend.entity.User;
 import com.ticket.system.ticketsystembackend.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,8 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public Ticket addTicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
+    public void addTicket(Ticket ticket) {
+        ticketRepository.save(ticket);
     }
 
     public List<Ticket> getAllTickets() {

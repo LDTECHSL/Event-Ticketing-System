@@ -7,9 +7,8 @@ public class Customer implements Runnable {
     private int ticketsToPurchase;
     private TicketPool ticketPool;
 
-    public Customer(int vendorId, int customerId, int retrievalInterval, int ticketsToPurchase, TicketPool ticketPool) {
+    public Customer(int vendorId, int retrievalInterval, int ticketsToPurchase, TicketPool ticketPool) {
         this.vendorId = vendorId;
-        this.customerId = customerId;
         this.retrievalInterval = retrievalInterval;
         this.ticketsToPurchase = ticketsToPurchase;
         this.ticketPool = ticketPool;
@@ -21,6 +20,7 @@ public class Customer implements Runnable {
             while (true) {
                 Thread.sleep(retrievalInterval);
                 ticketPool.removeTickets(vendorId, ticketsToPurchase, retrievalInterval);
+                break;
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

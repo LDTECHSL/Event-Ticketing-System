@@ -1,6 +1,7 @@
 package com.ticket.system.ticketsystembackend.controller;
 
 import com.ticket.system.ticketsystembackend.entity.Ticket;
+import com.ticket.system.ticketsystembackend.entity.Vendor;
 import com.ticket.system.ticketsystembackend.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,10 @@ public class TicketController {
     private TicketService ticketService;
 
     @PostMapping("/add-ticket")
-    public Ticket addTicket(@RequestBody Ticket ticket) {
-        return ticketService.addTicket(ticket);
+    public void addTicket(@RequestBody Ticket ticket) {
+        Vendor vendor = new Vendor(ticketService,ticket);
+        Thread thread = new Thread(vendor);
+        thread.start();
     }
 
     @GetMapping("/get-tickets")
