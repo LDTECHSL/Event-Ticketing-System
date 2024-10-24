@@ -13,11 +13,12 @@ public class VendorService {
         this.ticketPool = ticketPool;
     }
 
-    public void addTickets(Ticket ticket,int releaseInterval) {
-        Vendor vendor = new Vendor(ticket,releaseInterval);
+    public void addTickets(Ticket ticket, int releaseInterval) {
+        Vendor vendor = new Vendor(ticket, releaseInterval, ticketPool);
         Thread thread = new Thread(vendor);
         thread.start();
     }
+
 
     public Ticket getTicketCountByVendorId(int vendorId) {
         return ticketPool.getTicketCountByVendorId(vendorId);

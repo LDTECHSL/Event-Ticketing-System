@@ -7,7 +7,7 @@ public class Customer implements Runnable {
     private int ticketsToPurchase;
     private TicketPool ticketPool;
 
-    public Customer(int vendorId, int retrievalInterval, int ticketsToPurchase, TicketPool ticketPool) {
+    public Customer(int vendorId, int ticketsToPurchase,int retrievalInterval, TicketPool ticketPool) {
         this.vendorId = vendorId;
         this.retrievalInterval = retrievalInterval;
         this.ticketsToPurchase = ticketsToPurchase;

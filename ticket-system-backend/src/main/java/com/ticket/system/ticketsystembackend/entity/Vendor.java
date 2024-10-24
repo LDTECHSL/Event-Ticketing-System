@@ -22,9 +22,10 @@ public class Vendor implements Runnable {
         this.ticket = ticket;
     }
 
-    public Vendor(Ticket ticket, int releaseInterval) {
+    public Vendor(Ticket ticket, int releaseInterval, TicketPool ticketPool) {
         this.ticket = ticket;
         this.releaseInterval = releaseInterval;
+        this.ticketPool = ticketPool;
     }
 
     @Override
@@ -33,11 +34,12 @@ public class Vendor implements Runnable {
             while (true) {
                 Thread.sleep(releaseInterval);
                 ticketPool.addTickets(ticket);
-                break;
+                break;  // Break the loop after releasing the tickets
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
+
 }
 

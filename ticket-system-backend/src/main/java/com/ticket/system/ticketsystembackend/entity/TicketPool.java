@@ -18,6 +18,7 @@ public class TicketPool {
         }
     }
 
+
     public synchronized void removeTickets(int vendorId, int ticketsToPurchase, int retrievalInterval) {
         for (Ticket ticket : tickets) {
             if (ticket.getVendorId() == vendorId) {
